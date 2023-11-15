@@ -8,8 +8,9 @@ import Store from 'electron-store'
 const sqlite3 = require('sqlite3').verbose();
 let sql;
 // const db = new sqlite3.Database('../norSaas.db', (err) => { if (err) return console.error(err.message); });
-const db = new sqlite3.Database('sqlite.db');
-
+// const db = new sqlite3.Database('sqlite.db');
+const Database = require('better-sqlite3');
+const db = new Database('sqlite.db', { verbose: console.log });
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -54,26 +55,12 @@ ipcMain.on('message', async (event, arg) => {
     if (err) throw err;
     console.log('Saved!');
   });
-  db.serialize(() => {
-    // try { db.run("CREATE TABLE lorem (info TEXT)"); } catch {
-    //   console.log("table already exist")
-    // }
+  const stmt = db.prepare('INSERT INTO cats (name, age) VALUES (?, ?)');
+  const info = stmt.run('Joey', 2);
+
+  console.log(info.changes); // => 1
 
 
-    const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-    for (let i = 0; i < 10; i++) {
-      stmt.run("Ipsum " + i);
-    }
-    stmt.finalize();
-
-    db.each("SELECT rowid AS id, info FROM test", (err, row) => {
-      console.log(row.id + ": " + row.info + "11");
-    });
-  });
-
-  db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-    console.log(row.id + ": " + row.info + "11");
-  })
 
 
 

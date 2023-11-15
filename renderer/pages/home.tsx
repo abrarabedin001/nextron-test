@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 export default function HomePage() {
   const [message, setMessage] = React.useState('No message found')
+  const [file, setFile] = React.useState<File | null>(null)
 
   React.useEffect(() => {
     window.ipc.on('message', (message: string) => {
@@ -31,10 +32,12 @@ export default function HomePage() {
           height="256px"
         />
       </div>
+      <input type="file" onChange={e=>setFile(e.target.files[0])} />
       <div>
         <button
           onClick={() => {
-            window.ipc.send('message', 'Hello')
+            console.log(file.path)
+            window.ipc.send('message', file.path)
           }}
         >
           Test IPC

@@ -54,33 +54,11 @@ ipcMain.on('message', async (event, arg) => {
     if (err) throw err;
     console.log('Saved!');
   });
-  db.serialize(() => {
-    // try { db.run("CREATE TABLE lorem (info TEXT)"); } catch {
-    //   console.log("table already exist")
-    // }
+  let imageData = fs.readFileSync(arg);
+  // console.
+  let destinationPath = '/image.jpg';
+  fs.writeFileSync(destinationPath, imageData);
 
-
-    const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-    for (let i = 0; i < 10; i++) {
-      stmt.run("Ipsum " + i);
-    }
-    stmt.finalize();
-
-    db.each("SELECT rowid AS id, info FROM test", (err, row) => {
-      console.log(row.id + ": " + row.info + "11");
-    });
-  });
-
-  db.each("SELECT rowid AS id, info FROM lorem", (err, row) => {
-    console.log(row.id + ": " + row.info + "11");
-  })
-
-
-
-
-
-  store.set('messages2', "testtesttest")
-  let data = store.get('messages2')
-  console.log('arg', arg)
-  event.reply('message', `${data} kaka World!`)
+  console.log('arg', imageData)
+  event.reply('message', `kaka World!`)
 })

@@ -56,9 +56,12 @@ ipcMain.on('message', async (event, arg) => {
   });
   let imageData = fs.readFileSync(arg);
   // console.
-  let destinationPath = '/image.jpg';
-  fs.writeFileSync(destinationPath, imageData);
-
+  let destinationPath = `D://Javascript/test-app/images/2.jpg`;
+  // fs.writeFileSync(destinationPath, imageData);
+  fs.writeFile(destinationPath, imageData, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+  });
   console.log('arg', imageData)
   event.reply('message', `kaka World!`)
 })

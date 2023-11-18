@@ -100,7 +100,7 @@ ipcMain.on('save', async (event, arg) => {
 
 ipcMain.on('retrieve', async (event, arg) => {
   const readImageAsBase64 = (filePath) => {
-    const imageData = fs.readFileSync('/images/test2/1700065754526.jpg');
+    const imageData = fs.readFileSync('D://Javascript/test-app/images/test2/1700065754526.jpg');
     return imageData.toString('base64');
   };
 
